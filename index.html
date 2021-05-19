@@ -40,12 +40,12 @@
                               <div class="button">3</div>
                             </div>
                             <div class="calc-button-row">
-                                <div id="backspace" class="button">←</div>
+                                <div id="backspace" class="button">&larr;</div>
                                 <div class="button">0</div>
                                 <div id="clr" class="button">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
+                                <button type="submit" class="submit-btn" onclick="verify()">Submit</button>
                                 <p class="action-left"><span id="try">3</span> try left</p>
                             </div>
                         </div>
@@ -55,26 +55,49 @@
         </div>
 
         <div class="notify-section">
-            <p class="notify" id="matched">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify" id="wrong">✅ Pin Matched... Secret door is opening for you</p>
+            <p class="notify" id="wrong">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="matched">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
     <script>
+        function disp(yes,no){
+            document.getElementById(yes).style.display='inline';
+            document.getElementById(no).style.display='none';
+        }
+        function verify(){
+            if(actionLeft.innerHTML=='0'||isNaN(actionLeft.innerHTML)){
+                actionLeft.innerHTML='You have no';
+                return;
+            }
+            if(pinGen.value===pinMatch.value){
+                disp('matched','wrong');
+                actionLeft.innerHTML=3;
+            }
+            else{
+                disp('wrong','matched');
+                actionLeft.innerHTML=parseInt(actionLeft.innerHTML)-1;
+            }
+        }
         function genPin(){
             const val= 1000+Math.round(Math.random()*9000);
-            document.getElementById('pin-gen-form').value=val;
+            pinGen.value=val;
         }
 
+
+        const pinGen=document.getElementById('pin-gen-form');
         const digits=document.getElementById('digits');
+        const actionLeft=document.getElementById('try');
         const pinMatch=document.getElementById('btn-pin');
+
         digits.addEventListener('click',function(event){
             const inTxt=event.target.innerText;
+            if(inTxt=="C")pinMatch.value="";
             if(!isNaN(inTxt)){
-                console.log(event.target.innerText);
                 pinMatch.value=pinMatch.value+inTxt;
             }
-            if(inTxt=='←')console.log(pinMatch));
+            if(inTxt=='←')pinMatch.value=(pinMatch.value).slice(0, -1);
         })
+
     </script>
 </body>
 </html>
