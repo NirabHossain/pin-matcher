@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="pin-gen-form" class="form-control" type="text">
+                    <button id="generate" onclick="genPin()" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="btn-pin" class="form-control" type="text" value="">
+                    <div class="numbers">
+                        <div class="calc-body" id="digits">
+                            <div class="calc-button-row">
+                              <div class="button">7</div>
+                              <div class="button">8</div>
+                              <div class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button">4</div>
+                              <div class="button">5</div>
+                              <div class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button">1</div>
+                              <div class="button">2</div>
+                              <div class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div id="backspace" class="button">←</div>
+                                <div class="button">0</div>
+                                <div id="clr" class="button">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left"><span id="try">3</span> try left</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notify-section">
+            <p class="notify" id="matched">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="wrong">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+    <script>
+        function genPin(){
+            const val= 1000+Math.round(Math.random()*9000);
+            document.getElementById('pin-gen-form').value=val;
+        }
+
+        const digits=document.getElementById('digits');
+        const pinMatch=document.getElementById('btn-pin');
+        digits.addEventListener('click',function(event){
+            const inTxt=event.target.innerText;
+            if(!isNaN(inTxt)){
+                console.log(event.target.innerText);
+                pinMatch.value=pinMatch.value+inTxt;
+            }
+            if(inTxt=='←')console.log(pinMatch));
+        })
+    </script>
+</body>
+</html>
